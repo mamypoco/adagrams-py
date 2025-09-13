@@ -1,4 +1,5 @@
 from random import randint
+# from asset import LETTER_POOL
 
 LETTER_POOL = {
     'A': 9, 
@@ -28,6 +29,7 @@ LETTER_POOL = {
     'Y': 2, 
     'Z': 1
 }
+
 #randint: randomly choose in range by index using parameter
 
 def draw_letters():
@@ -60,7 +62,23 @@ def draw_letters():
 draw_letters()
 
 def uses_available_letters(word, letter_bank):
-    pass
+    updated_letter_bank = letter_bank.copy()
+    
+    matched = ""
+
+    for letter in word: # "zebra"
+        for bank_letter in updated_letter_bank: 
+            # find out if every letter found
+            if letter.upper() == bank_letter:
+                #only take first match
+                matched += letter
+                updated_letter_bank.remove(letter.upper())
+                break
+    print(matched)
+    print(matched == word)
+    return matched == word
+    
+uses_available_letters("aAA", ["A", "X", "X", "X", "X", "X", "X", "X", "X", "X"])
 
 def score_word(word):
     pass
