@@ -28,17 +28,36 @@ LETTER_POOL = {
     'Y': 2, 
     'Z': 1
 }
+#randint: randomly choose in range by index using parameter
 
 def draw_letters():
+    #create a copy of pool for tracking
+    tracking_pool = []
+    for key, value in LETTER_POOL.items():
+        tracking_pool.append({key: value})
     
-    #Returns an array of ten strings
-    hand = [] #["A", "K", "S", "O", "R", "E", "T", "A", "I", "N", "L"]
-    # for key, value in LETTER_POOL.items():
-    #     LETTER_POOL[key]
-
-    letter = randint(list(LETTER_POOL.keys()))
-    print(letter)
-
+    letters = [] #create placeholder like ["A", "K", "S", "O", "R", "E", "T", "A", "I", "N"]
+    
+    counter = 1
+    while counter <= 10:
+        
+        random_index = randint(0, len(tracking_pool) -1) # 3
+        dict_item = tracking_pool[random_index] # {'A': 9 }
+        
+        #for dict_item {'B': 2}, if value > 0, append the key and -1 the value
+        for key, value in dict_item.items(): 
+            if value > 0:
+                letters.append(key)
+                value -= 1
+                tracking_pool[random_index][key] = value #update the value in the tracking_pool
+        
+        counter += 1
+    
+    print("letters:", letters)
+    print("tracking_pool", tracking_pool)
+    return letters
+    
+draw_letters()
 
 def uses_available_letters(word, letter_bank):
     pass
