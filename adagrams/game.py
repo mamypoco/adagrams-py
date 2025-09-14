@@ -1,34 +1,34 @@
 from random import randint
-from adagrams.asset import LETTER_POOL
+# from adagrams.asset import LETTER_POOL
 
-# LETTER_POOL = {
-#     'A': 9, 
-#     'B': 2, 
-#     'C': 2, 
-#     'D': 4, 
-#     'E': 12, 
-#     'F': 2, 
-#     'G': 3, 
-#     'H': 2, 
-#     'I': 9, 
-#     'J': 1, 
-#     'K': 1, 
-#     'L': 4, 
-#     'M': 2, 
-#     'N': 6, 
-#     'O': 8, 
-#     'P': 2, 
-#     'Q': 1, 
-#     'R': 6, 
-#     'S': 4, 
-#     'T': 6, 
-#     'U': 4, 
-#     'V': 2, 
-#     'W': 2, 
-#     'X': 1, 
-#     'Y': 2, 
-#     'Z': 1
-# }
+LETTER_POOL = {
+    'A': 9, 
+    'B': 2, 
+    'C': 2, 
+    'D': 4, 
+    'E': 12, 
+    'F': 2, 
+    'G': 3, 
+    'H': 2, 
+    'I': 9, 
+    'J': 1, 
+    'K': 1, 
+    'L': 4, 
+    'M': 2, 
+    'N': 6, 
+    'O': 8, 
+    'P': 2, 
+    'Q': 1, 
+    'R': 6, 
+    'S': 4, 
+    'T': 6, 
+    'U': 4, 
+    'V': 2, 
+    'W': 2, 
+    'X': 1, 
+    'Y': 2, 
+    'Z': 1
+}
 
 #randint: randomly choose in range by index using parameter
 
@@ -78,10 +78,57 @@ def uses_available_letters(word, letter_bank):
     print(matched == word)
     return matched == word
     
-uses_available_letters("aAA", ["A", "X", "X", "X", "X", "X", "X", "X", "X", "X"])
+uses_available_letters("zebra", ["Z", "E", "B", "R", "A", "I", "O", "E", "C", "K"])
 
 def score_word(word):
-    pass
+    # word could be lower case
+    word = word.upper()
+    print(word)
+    # create a dict like { "A": 1, "E": 1 ...} to lookup
+    # score chart - original format
+    SCORE_TO_LETTERS = {
+        1: ["A", "E", "I", "O", "U", "L", "N", "R", "S", "T"],
+        2: ["D", "G"],
+        3: ["B", "C", "M", "P"],
+        4: ["F", "H", "V","W", "Y"],
+        5: ["K"],
+        8: ["J", "X"],
+        10: ["Q", "Z"],
+    }
+
+    # create letter to score dict
+    def get_letter_map(score_to_letters):
+        map = {}
+
+        for score, letters in score_to_letters.items():
+            for letter in letters:
+                map[letter] = score
+        return map
+
+    # save as a vaiable
+    SCORE_CHART = get_letter_map(SCORE_TO_LETTERS)
+    print(SCORE_CHART)
+        
+    # get a letter score (fast) via key
+    def get_letter_score(letter_to_score):
+        #return the value/score
+        return SCORE_CHART[letter_to_score] 
+
+    # sum the score
+    score = 0
+    for letter in word:
+        score += get_letter_score(letter)
+    print("before length: ", score) 
+
+    if len(word) in range(7, 11):
+        score += 8
+    print("after length: ", score)
+    return score
+
+
+word = "star"
+score_word(word)
+
 
 def get_highest_word_score(word_list):
     pass
