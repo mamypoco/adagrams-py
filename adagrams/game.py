@@ -16,7 +16,7 @@ def draw_letters():
         random_index = randint(0, len(tracking_pool) -1) # 3
         dict_item = tracking_pool[random_index] # {'A': 9 }
         
-        #for dict_item {'B': 2}, if value > 0, append the key and -1 the value
+        # in {'B': 2}, if value > 0, append the key and -1 the value
         for key, value in dict_item.items(): 
             if value > 0:
                 letters.append(key)
@@ -101,13 +101,13 @@ def score_word(word):
 
 
 def get_highest_word_score(words):
-    # [("flower", 20), ("earth", 18), ("wonderful", 45)]
+    # create like [("flower", 20), ("earth", 18), ("wonderful", 45)]
     scores = []
 
     for word in words:
         scores.append((word, score_word(word)))
     
-    print("scores: ", scores)
+    # print("scores: ", scores)
 
     best_pair = scores[0] # set 1st pair( , ) is the best_pair
 
