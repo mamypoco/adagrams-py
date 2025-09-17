@@ -11,7 +11,7 @@ def draw_letters():
     letters = [] #create container ["A", "K", "S", "O", "R", "E", "T", "A", "I", "N"]
     
     counter = 1
-    while counter <= 10:
+    while counter < 11:
         
         random_index = randint(0, len(tracking_pool) -1) # 3
         dict_item = tracking_pool[random_index] # {'A': 9 }
@@ -101,26 +101,31 @@ def score_word(word):
 
 
 def get_highest_word_score(words):
-    # create like [("flower", 20), ("earth", 18), ("wonderful", 45)]
+    # create () inside [("flower", 20), ("earth", 18), ("wonderful", 45)]
+    # create {} inside [{"flower", 20}, {"earth", 18}, {"wonderful", 45}]
     scores = []
 
     for word in words:
         scores.append((word, score_word(word)))
+    # for dict option
+    # for word in words:
+    #     scores.append({word: score_word(word)})
     
-    # print("scores: ", scores)
+    print("scores: ", scores)
 
     best_pair = scores[0] # set 1st pair( , ) is the best_pair
+    # tried to use dict pair {word: score} but could not find better way to access key without using separate for-loop
 
-    # loop scores-list, compare score and best_pair[1]
-    for word, score in scores: # unpack (word, score) 
-        if score > best_pair[1]: # score > (, 18)
+    # loop scores-list, compare score and best_pair[1]. Can't use max so use comparison
+    for word, score in scores: # unpack to (word, score) 
+        if score > best_pair[1]: # when score is higher than (, score) 
             best_pair = (word, score)
 
         elif score == best_pair[1]: # score is tied
-            # if word len is 10 & best_pair's word len is not 10, take the word
+            # if word len is 10 & best_pair's len is not 10, take the word
             if len(word) == 10 and len(best_pair[0]) != 10:
                 best_pair = (word, score)
-            # if word len is shorter & best_pair word len is not 10, take the word
+            # if word len is fewer than best_pair & best_pair's len is not 10, take the word
             elif len(word) < len(best_pair[0]) and len(best_pair[0]) != 10:
                 best_pair = (word, score)
 
