@@ -1,36 +1,6 @@
 from random import randint
-# from adagrams.asset import LETTER_POOL
+from adagrams.asset import LETTER_POOL
 
-LETTER_POOL = {
-    'A': 9, 
-    'B': 2, 
-    'C': 2, 
-    'D': 4, 
-    'E': 12, 
-    'F': 2, 
-    'G': 3, 
-    'H': 2, 
-    'I': 9, 
-    'J': 1, 
-    'K': 1, 
-    'L': 4, 
-    'M': 2, 
-    'N': 6, 
-    'O': 8, 
-    'P': 2, 
-    'Q': 1, 
-    'R': 6, 
-    'S': 4, 
-    'T': 6, 
-    'U': 4, 
-    'V': 2, 
-    'W': 2, 
-    'X': 1, 
-    'Y': 2, 
-    'Z': 1
-}
-
-#randint: randomly choose in range by index using parameter
 
 def draw_letters():
     #create a copy of pool for tracking
@@ -38,7 +8,7 @@ def draw_letters():
     for key, value in LETTER_POOL.items():
         tracking_pool.append({key: value})
     
-    letters = [] #create placeholder like ["A", "K", "S", "O", "R", "E", "T", "A", "I", "N"]
+    letters = [] #create container ["A", "K", "S", "O", "R", "E", "T", "A", "I", "N"]
     
     counter = 1
     while counter <= 10:
@@ -55,11 +25,11 @@ def draw_letters():
         
         counter += 1
     
+    # print("tracking_pool", tracking_pool)
     print("letters:", letters)
-    print("tracking_pool", tracking_pool)
     return letters
     
-draw_letters()
+# draw_letters()
 
 def uses_available_letters(word, letter_bank):
     updated_letter_bank = letter_bank.copy()
@@ -74,16 +44,16 @@ def uses_available_letters(word, letter_bank):
                 matched += letter
                 updated_letter_bank.remove(letter.upper())
                 break
-    print(matched)
-    print(matched == word)
+    # print(matched)
+    # print(matched == word)
     return matched == word
     
-uses_available_letters("zebra", ["Z", "E", "B", "R", "A", "I", "O", "E", "C", "K"])
+# uses_available_letters("zebra", ["Z", "E", "B", "R", "A", "I", "O", "E", "C", "K"])
 
 def score_word(word):
     # word could be lower case
     word = word.upper()
-    print(word)
+    
     # create a dict like { "A": 1, "E": 1 ...} to lookup
     # score chart - original format
     SCORE_TO_LETTERS = {
@@ -107,7 +77,7 @@ def score_word(word):
 
     # save as a vaiable
     SCORE_CHART = get_letter_map(SCORE_TO_LETTERS)
-    print(SCORE_CHART)
+    # print(SCORE_CHART)
         
     # get a letter score (fast) via key
     def get_letter_score(letter_to_score):
@@ -118,17 +88,45 @@ def score_word(word):
     score = 0
     for letter in word:
         score += get_letter_score(letter)
-    print("before length: ", score) 
+    # print("before length: ", score) 
 
     if len(word) in range(7, 11):
         score += 8
-    print("after length: ", score)
+    # print("after length: ", score)
     return score
 
 
-word = "star"
-score_word(word)
+# word = "zebra"
+# score_word(word)
 
 
-def get_highest_word_score(word_list):
-    pass
+def get_highest_word_score(words):
+    # [("flower", 20), ("earth", 18), ("wonderful", 45)]
+    scores = []
+
+    for word in words:
+        scores.append((word, score_word(word)))
+    
+    print("scores: ", scores)
+
+    best_pair = scores[0] # set 1st pair( , ) is the best_pair
+
+    # loop scores-list, compare score and best_pair[1]
+    for word, score in scores: # unpack (word, score) 
+        if score > best_pair[1]: # score > (, 18)
+            best_pair = (word, score)
+
+        elif score == best_pair[1]: # score is tied
+            # if word len is 10 & best_pair's word len is not 10, take the word
+            if len(word) == 10 and len(best_pair[0]) != 10:
+                best_pair = (word, score)
+            # if word len is shorter & best_pair word len is not 10, take the word
+            elif len(word) < len(best_pair[0]) and len(best_pair[0]) != 10:
+                best_pair = (word, score)
+
+    # print(best_pair)
+    return best_pair
+
+# words = ["AAAAAAAAAA", "BBBBBB"]
+# get_highest_word_score(words)
+
