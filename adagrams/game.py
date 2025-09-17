@@ -8,10 +8,10 @@ def draw_letters():
     for key, value in LETTER_POOL.items():
         tracking_pool.append({key: value})
     
-    letters = [] #create container ["A", "K", "S", "O", "R", "E", "T", "A", "I", "N"]
+    letters = [] #create like ["A", "K", "S", "O", "R", "E", "T", "A", "I", "N"]
     
     counter = 1
-    while counter < 11:
+    while counter <= 10:
         
         random_index = randint(0, len(tracking_pool) -1) # 3
         dict_item = tracking_pool[random_index] # {'A': 9 }
@@ -114,7 +114,8 @@ def get_highest_word_score(words):
     print("scores: ", scores)
 
     best_pair = scores[0] # set 1st pair( , ) is the best_pair
-    # tried to use dict pair {word: score} but could not find better way to access key without using separate for-loop
+
+    # tried to use dict pair {word: score} here, but could not find better way to access key without using separate for-loop
 
     # loop scores-list, compare score and best_pair[1]. Can't use max so use comparison
     for word, score in scores: # unpack to (word, score) 
@@ -128,6 +129,7 @@ def get_highest_word_score(words):
             # if word len is fewer than best_pair & best_pair's len is not 10, take the word
             elif len(word) < len(best_pair[0]) and len(best_pair[0]) != 10:
                 best_pair = (word, score)
+            # If the there are multiple words that are the same score and the same length, pick the first one in the supplied list -> keep the earlier one = do nothing
 
     # print(best_pair)
     return best_pair
