@@ -10,20 +10,22 @@ def draw_letters():
     
     letters = [] #create like ["A", "K", "S", "O", "R", "E", "T", "A", "I", "N"]
     
-    counter = 1
-    while counter <= 10:
+    # counter = 1
+    while len(letters) < 10: # when 9 len, the loop run + if len becomes 10, loop stops
         
-        random_index = randint(0, len(tracking_pool) -1) # 3
-        dict_item = tracking_pool[random_index] # {'A': 9 }
+        random_index = randint(0, len(tracking_pool) -1) # 8
+        dict_item = tracking_pool[random_index] # {'I': 9 }
         
-        # in {'B': 2}, if value > 0, append the key and -1 the value
+        #in {'I': 9 }
         for key, value in dict_item.items(): 
+            # if value > 0, append the key and value-1
             if value > 0:
                 letters.append(key)
                 value -= 1
                 tracking_pool[random_index][key] = value #update the value in the tracking_pool
+            #if value == 0, loop continue until next one is picked
         
-        counter += 1
+        # counter += 1
     
     # print("tracking_pool", tracking_pool)
     print("letters:", letters)
