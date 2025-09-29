@@ -1,6 +1,6 @@
 import pytest
 
-from adagrams.game import score_word
+from adagrams.game_original import score_word
 
 def test_score_word_accurate():
     # Assert

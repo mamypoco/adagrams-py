@@ -1,4 +1,4 @@
-from adagrams.game import score_word, get_highest_word_score
+from adagrams.game_original import score_word, get_highest_word_score
 
 def test_get_highest_word_score_accurate():
     # Arrange

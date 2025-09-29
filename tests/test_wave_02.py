@@ -1,6 +1,6 @@
 import pytest
 
-from adagrams.game import uses_available_letters
+from adagrams.game_original import uses_available_letters
 
 def test_uses_available_letters_true_word_in_letter_bank():
     # Arrange

@@ -1,6 +1,6 @@
 import pytest
 
-from adagrams.game import draw_letters
+from adagrams.game_original import draw_letters
 
 LETTER_POOL = {
     'A': 9, 
