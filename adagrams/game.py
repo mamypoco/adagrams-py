@@ -33,33 +33,28 @@ LETTER_POOL = {
 HAND_SIZE = 10 # define constant to tacke magic number
 
 def draw_letters():
-    #create a copy for tracking pool
+    # create a copy for tracking pool
     tracking_pool = []
-    # use list insted of dictionary
-    for key, value in LETTER_POOL.items():
-        tracking_pool.append([key, value])
+    # use list instead of dict
+    for letter, count in LETTER_POOL.items():
+        # create flat list using letter only for probability ["A", "A", "A", "B", "B"]
+        tracking_pool += [letter] * count 
+        # tracking_pool.append([key, value]) this would create inside list
+
+    print("tracking_pool:", tracking_pool)
     
     letters = [] # this will be returned
     
     while len(letters) < HAND_SIZE:
         random_index = randint(0, len(tracking_pool) - 1) # 8
-        picked_pair = tracking_pool[random_index] # ['I', 9 ]
-        # print(picked_pair)
-        LETTER = picked_pair[0]
-        COUNT = picked_pair[1]
-        
-        # if picked_pair's count > 0, add the letter to letters list. 
-        if COUNT > 0:
-            # if value > 0, append the key and value - 1
-            letters.append(LETTER)
-            COUNT -= 1
-            [LETTER, COUNT] # update the value 
-            #if value == 0, do nothing
+        # once you append letter by index, remove it from pool
+        letters.append(tracking_pool[random_index])
+        tracking_pool.pop(random_index)
     
-    # print("letters:", letters)
+    print("letters:", letters)
     return letters
     
-# draw_letters()
+draw_letters()
 
 def uses_available_letters(word, letter_bank):
     updated_letter_bank = letter_bank.copy()
@@ -86,7 +81,7 @@ def score_word(word):
     word = word.upper()
 
     SCORE_CHART = {
-        "A": 1,
+        "A": 1, 
         "E": 1,
         "I": 1,
         "O": 1,
@@ -151,13 +146,12 @@ def get_highest_word_score(words):
             best_pair = (word, score)
 
         elif score == best_pair[1]: # score is tied
-            # if word len is 10 & best_pair's len is not 10, take the word
+            
             if len(word) == 10 and len(best_pair[0]) != 10:
                 best_pair = (word, score)
-            # if word len is fewer than best_pair & best_pair's len is not 10, take the word
+            
             elif len(word) < len(best_pair[0]) and len(best_pair[0]) != 10:
                 best_pair = (word, score)
-            # If the there are multiple words that are the same score and the same length, pick the first one in the supplied list -> keep the earlier one = do nothing
 
     # print(best_pair)
     return best_pair
