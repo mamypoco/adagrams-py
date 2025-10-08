@@ -130,31 +130,25 @@ def score_word(word):
 
 
 def get_highest_word_score(words):
+    # get the score for the word and compare in the same for-loop
+    best_word = words[0] # set 1st word is the best_word
+    best_score = score_word(best_word) # set the 1st score is the best_score
 
-    scores = []
+    for word in words[1:]:
+        score = score_word(word) # in the loop, get score for each word
 
-    for word in words:
-        scores.append((word, score_word(word)))
-    
-    print("scores: ", scores)
+        if score > best_score: # when score is higher than best_score
+            best_word, best_score = word, score
 
-    best_pair = scores[0] # set 1st pair is the best_pair
-
-    # loop scores-list, compare score and best_pair[1]. 
-    for word, score in scores: # unpack to (word, score) 
-        if score > best_pair[1]: # when score is higher than (, score) 
-            best_pair = (word, score)
-
-        elif score == best_pair[1]: # score is tied
+        elif score == best_score: # score is tied
             
-            if len(word) == 10 and len(best_pair[0]) != 10:
-                best_pair = (word, score)
+            if len(word) == 10 and len(best_word) != 10:
+                best_word = word
             
-            elif len(word) < len(best_pair[0]) and len(best_pair[0]) != 10:
-                best_pair = (word, score)
+            elif len(word) < len(best_word) and len(best_word) != 10:
+                best_word = word
 
-    # print(best_pair)
-    return best_pair
+    return best_word, best_score
 
 # words = ["AAAAAAAAAA", "BBBBBB"]
 # get_highest_word_score(words)
